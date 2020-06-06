@@ -1,0 +1,55 @@
+ssh banditXX@bandit.labs.overthewire.org -p 2220
+
+bandit
+0: bandit0
+1: boJ9jbbUNNfktd78OOpsqOltutMc3MY1
+2: CV1DtqXWVFXTvM2F0k09SHz0YwRINYA9
+3: UmHadQclWmgdLOKQ3YNgjWxGoRMb5luK
+4: pIwrPrtPN36QITSp3EQaw936yaFoFgAB
+5: koReBOKuIDDepwhWk7jZC0RTdopnAYKh <-- file ./-file* <-- states what each filetype is
+6: DXjZPULLxYr17uwoI01bNLQbtFemEgo7 <-- find -size 1033c <-- find file that is 1033 bytes
+7: HKBPTKQnIay4Fw76bEy8PVxKEDQRKTzs <-- find / -size 33c -group bandit6 -user bandit7 2>/dev/null <-- file 33 bytes in group bandit6, owned by user bandit7
+8: cvX2JJa4CFALtqS87jk27qwqGhBM9plV <-- cat data.txt | grep millionth
+9: UsvVyFSfZZWbi6wgC7dAFyFuR6jQQUhR <-- cat data.txt | sort | uniuq -u <-- print only only unique line of text
+10: truKLdjsbJ5g7yyJ2X2R0o3a5HQJFuLk <-- strings data.txt | grep "=="
+11: IFukwKGsFW8MOq3IRFqrxE1hxTNEbUPR <-- data.txt | base64 -d
+12: 5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu <-- cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'
+13: 8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL <-- use file to see file type, then rename and use proper extraction tool.  From there, look at extracted file using file command, rinse-and-repeat until finally get to text
+14: ssh bandit14@localhost -i sshkey.private <-- use the ssh private key to connect in (pass is: 4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e, found in /etc/bandit_pass/bandit14) 
+15: BfMYroe26WYalil77FoDi9qh59eK5xNr <-- openssl s_client -connect localhost:30001
+16: cluFn7wTiGryunymYOu4RcffSxQluehd
+17: xLYVMN9WE5zQ5vHacb0sZEVqbrp7nBTn <-- nmap scan yielded 31046, 31518, 31691, 31790, and 31960.  using openssl yielded that only 31790 responded, with an sshkey.  used sshkey to connect, then cat'd /etc/bandit_pass/bandit17 to get the password.
+18: kfBf3eYk5BPBRzwjqutbbfE887SVc5Yd <-- diff passwords.old passwords.new
+19: IueksS7Ubh8G3DCwVzrTd8rAVOwq3M5x <-- ssh bandit18@bandit.labs.overthewire.org -p 2220 /bin/sh <-- cat readme
+20: GbKksEFF4yrVs6il55v6gwY5aVje5f0j <-- ./bandit20-do cat /etc/bandit_pass/bandit20
+21: gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr <-- nc -lvnp 55555 <-- Ctrl-Z (to set to bg) <-- ./suconnect 55555 <-- Ctrl-Z <-- fg 1 (to set nc to foreground) <-- copy/paste password <-- done
+22: Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI <-- found by cat /etc/cron.d/cronjob_bandit22, then looking at the tmp file it points to... QUESTION: how were we supposed to know it was this file to look at tho?  Is it because bandit21 is a member?  Need to further investigate
+23: jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n <-- Had to create a whoami function that echo'd bandit23, export PATH=/tmp:$PATH (to have it point to my whoami bash function), set bash function to be exectuable (chmod +x), then following the script, echo "I am user bandit23" | md5sum | cut -d ' ' -f 1 (to get the filename to cat)
+24: UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ <-- Created script to cat and output to tmp value placed into var/spool/bandit24 folder, with a fake whoami to say I'm bandit24 
+
+
+ssh bandit25@bandit.labs.overthewire.org -p 2220
+25: uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG <-- use script below to generate pass file, then run: cat pass.txt | nc localhsot 3002 | grep -v Wrong <-- Filters out wrong values so you can get the right one
+#!/bin/bash
+for ((i=0;i<=9999;i++));
+do
+    y=$(printf "%04d" $i)
+
+    echo "UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ ${y}" >> /tmp/pass.txt
+done
+
+
+26: 5czgV9L3Xx8JPOyRbXh6lQbmIOWvPT6Z <-- make window extremely small (so more command is run), then press v to open vi, then in vi, esc, and then ":e /etc/bandit_pass/bandit26" to read pass.  To gain shell, you can try :shell, but that just puts us back into exsiting shell... need to first :set shell=/in/bash and then we can run :shell to get bash shell.  Credit goes to medium.com/@coturnix97/overthewires-bandit-25-26-shell-355d78fd2f4d.  looking at /etc/passwd tells us the odd shell for bandit26
+
+27: 3ba3118a22e93127a4ed485be72ef5ea <-- ./bandit27-do cat /etc/bandit_pass/bandit27
+28: 0ef186ac70e04ea33b4c1853d2526fa2 <-- from /tmp, git clone ssh://bandit27-git@localhost/home/bandit27-git/repo; cd repo, ls, cat README
+
+29: bbc96594b4e001778eee9975372716b2 <-- similar to above, but password is x'd out when looking at README.md.  Running git log shows there were some changes... running git log -p -1 shows us diff from last entry which is the pass.
+
+30: 5b90576bedb2cc04c86a9e924ce42faf <-- README.md says no passwords in production... suggests branching.  "git branch -a" shows branches.  I see a /dev branch, so "git checkout dev" switches to the development branch, and from there, cat README.md gives me the pass
+
+31: 47e603bb428404d265f59c42920d81e5 <-- README.md is "just an empty file"... viewing branches yields nothing useful.  ends up being git tagging... "git tag" shows there's a tag called "secret".  "git show secret" shows the secret.
+
+32: 56a9bf19c63d650ce78e6ec0354ee45e <-- create the file, git add key.txt -f, git commit -m "master", git push origin master, and then we get password
+
+33: c9c3199ddf4121b10cf581a98d51caee <-- Enter $0 to gain shell
